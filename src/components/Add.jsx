@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CreateNote from './CreateNote';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { IoAddOutline } from 'react-icons/io5';
 
 const Add = () => {
+  const [showForm, setShowForm] = useState(false);
+
   return (
-    <aside className='add'>
-      {/* <button>
-        <AiOutlinePlus />
-      </button> */}
-      <CreateNote />
-    </aside>
+    <div className='add'>
+      {!showForm && (
+        <button onClick={() => setShowForm((prev) => !prev)}>
+          <IoAddOutline size='80px'></IoAddOutline>
+          Create A New Note
+        </button>
+      )}
+      <CreateNote showForm={showForm} setShowForm={setShowForm} />
+    </div>
   );
 };
 

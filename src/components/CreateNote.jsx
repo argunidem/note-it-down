@@ -1,23 +1,29 @@
-import React from 'react';
-import { BiSave } from 'react-icons/bi';
+import React, { useState } from 'react';
+import { IoAddOutline } from 'react-icons/io5';
 
-const CreateNote = () => {
+const CreateNote = ({ showForm, setShowForm }) => {
   const textAreaHeight = (e) => {
     const scrollbarHeight = e.target.scrollHeight;
     console.log(scrollbarHeight);
     e.target.style.height = `${scrollbarHeight}px`;
   };
 
-  return (
-    <form className='create-note'>
-      <input type='text' placeholder='Title' />
-      <textarea onKeyUp={textAreaHeight} placeholder='Your note' />
-      <button className='save-btn'>
-        Save
-        <BiSave size='25px' />
-      </button>
-    </form>
-  );
+  if (showForm) {
+    return (
+      <form className='create-note'>
+        <IoAddOutline
+          size='40px'
+          onClick={() => setShowForm((prev) => !prev)}
+          className='close-btn'
+        />
+        <input type='text' placeholder='Title' />
+        <textarea onKeyUp={textAreaHeight} placeholder='Your note' />
+        <button onClick={(e) => e.preventDefault()} className='save-btn'>
+          Save
+        </button>
+      </form>
+    );
+  }
 };
 
 export default CreateNote;

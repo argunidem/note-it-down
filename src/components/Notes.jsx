@@ -1,14 +1,15 @@
 import React from 'react';
+import Note from './Note';
 
 const Notes = () => {
   return (
     <main className='notes'>
       <div className='boxes'>
-        <div className='box'>Notes</div>
-        <div className='box'>Notes</div>
-        <div className='box'>Notes</div>
-        <div className='box'>Notes</div>
-        <div className='box'>Notes</div>
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
       </div>
     </main>
   );

@@ -19,6 +19,7 @@ body,
 header {
   background-color: rgb(55, 55, 63);
   height: 7vh;
+  padding-block: 4vh;
   width: 100%;
   font-weight: 900;
   word-spacing: 4px;
@@ -44,36 +45,58 @@ header {
   gap: 10px;
 }
 
-.add button {
-  padding: 10px;
+.add > button {
+  font-size: 20px;
   cursor: pointer;
-  color: #ccc;
   background-color: rgb(55, 55, 63);
-  border: none;
+  color: #ccc;
   border-radius: 10px;
-  font-size: 60px;
-  height: 80px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-inline-end: 25px;
 }
 
-.add button:hover {
+.add > button:hover {
   background-color: rgb(66, 66, 75);
   color: #fff;
 }
 
 .notes {
   flex-shrink: 2;
-  padding: 40px 20px;
+  padding: 20px;
   width: 100%;
 }
 
 .create-note {
-  justify-self: center;
   display: flex;
   flex-direction: column;
   min-width: 250px;
+  position: relative;
 }
 
-.create-note > *:not(button) {
+.create-note svg.close-btn {
+  cursor: pointer;
+  z-index: 2;
+  position: absolute;
+  background-color: #5f3737;
+  top: -20px;
+  right: -20px;
+  height: 40px;
+  border-radius: 50%;
+  transform: rotate(45deg);
+}
+
+.create-note .close-btn:hover {
+  background-color: #502e2e;
+}
+
+.create-note .close-btn {
+  padding: 8px;
+}
+
+.create-note > *:not(svg) {
   width: 100%;
   padding: 10px 12px;
   color: #888;
@@ -102,8 +125,8 @@ textarea::-webkit-scrollbar {
 
 .create-note > input:hover,
 .create-note > textarea:hover {
-  background-color: #39375f;
-  transform: scaleY(1.05);
+  background-color: #39384d;
+  transform: scale(1.02);
 }
 
 .create-note > *:focus {
@@ -112,29 +135,70 @@ textarea::-webkit-scrollbar {
 }
 
 button.save-btn {
+  cursor: pointer;
   align-self: flex-end;
-  width: 40%;
+  width: 35%;
   height: 40px;
   margin-top: 2px;
   font-size: 20px;
+  color: #aaa;
+  background-color: rgb(55, 55, 63);
+  border: none;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  color: #aaa;
+}
+
+button.save-btn:hover {
+  background-color: rgb(66, 66, 75);
+  color: #fff;
 }
 
 .boxes {
-  display: none;
-  /* display: flex; */
+  display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
 }
 
 .box {
   margin: 3%;
   padding: 50px;
-  background-color: #000;
+  background-color: #fff;
   border-radius: 12px;
   width: 300px;
+}
+
+@media (min-width: 640px) {
+  .boxes {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .boxes::after {
+    margin: 3%;
+    content: '';
+    width: 300px;
+  }
+}
+
+@media (min-width: 768px) {
+  .box {
+    width: 280px;
+  }
+
+  .boxes::after {
+    width: 280px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .box {
+    width: 280px;
+  }
+
+  .boxes::after {
+    width: 280px;
+  }
 }
