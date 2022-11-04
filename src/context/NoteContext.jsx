@@ -1,8 +1,26 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useContext } from 'react';
+import ToggleContext from './ToggleContext';
 
 const NoteContext = createContext();
 
 export const NoteProvider = ({ children }) => {
+  const { showForm, setShowForm } = useContext(ToggleContext);
+
+  const [notes, setNotes] = useState([
+    {
+      title: 'Note Title 1',
+      message: 'This is Note 1',
+    },
+    {
+      title: 'Note Title 2',
+      message: 'This is Note 2',
+    },
+    {
+      title: 'Note Title 3',
+      message: 'This is Note 3',
+    },
+  ]);
+
   const [note, setNote] = useState({
     title: '',
     message: '',
@@ -17,8 +35,19 @@ export const NoteProvider = ({ children }) => {
     });
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setNotes([...notes, note]);
+    setNote({
+      title: '',
+      message: '',
+    });
+    setShowForm((prev) => !prev);
+    console.log(notes);
+  };
+
   return (
-    <NoteContext.Provider value={{ note, changeHandler }}>
+    <NoteContext.Provider value={{ note, notes, changeHandler, submitHandler }}>
       {children}
     </NoteContext.Provider>
   );

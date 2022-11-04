@@ -1,15 +1,14 @@
 import React, { useContext } from 'react';
 import NoteContext from '../context/NoteContext';
 import { IoAddOutline } from 'react-icons/io5';
+import ToggleContext from '../context/ToggleContext';
 
-const CreateNote = ({ showForm, setShowForm }) => {
-  const { note, changeHandler } = useContext(NoteContext);
-
-  console.log(note);
+const CreateNote = () => {
+  const { note, changeHandler, submitHandler } = useContext(NoteContext);
+  const { showForm, setShowForm } = useContext(ToggleContext);
 
   const textAreaHeight = (e) => {
     const scrollbarHeight = e.target.scrollHeight;
-    // console.log(scrollbarHeight);
     e.target.style.height = `${scrollbarHeight}px`;
   };
 
@@ -35,7 +34,7 @@ const CreateNote = ({ showForm, setShowForm }) => {
           onChange={changeHandler}
           value={note.message}
         />
-        <button onClick={(e) => e.preventDefault()} className='save-btn'>
+        <button onClick={submitHandler} className='save-btn'>
           Save
         </button>
       </form>

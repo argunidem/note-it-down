@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Note = () => {
+const Note = ({ note }) => {
   return (
     <article className='box'>
-      <h3>Title</h3>
-      <p>Content</p>
+      <h3>{note.title}</h3>
+      <p>{note.message}</p>
     </article>
   );
 };

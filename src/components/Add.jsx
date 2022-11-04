@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import CreateNote from './CreateNote';
 import { IoAddOutline } from 'react-icons/io5';
+import ToggleContext from '../context/ToggleContext';
 
 const Add = () => {
-  const [showForm, setShowForm] = useState(false);
+  const { showForm, setShowForm } = useContext(ToggleContext);
 
   return (
     <div className='add'>
@@ -13,7 +14,7 @@ const Add = () => {
           Create A New Note
         </button>
       )}
-      <CreateNote showForm={showForm} setShowForm={setShowForm} />
+      <CreateNote />
     </div>
   );
 };
