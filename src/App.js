@@ -1,13 +1,14 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 import Main from './components/Main';
+import { NoteProvider } from './context/NoteContext';
 
 const App = () => {
   return (
-    <React.Fragment>
+    <NoteProvider>
       <Navbar />
       <Main />
-    </React.Fragment>
+    </NoteProvider>
   );
 };
 
