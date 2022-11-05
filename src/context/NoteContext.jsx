@@ -1,30 +1,40 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 import ToggleContext from './ToggleContext';
 
 const NoteContext = createContext();
 
 export const NoteProvider = ({ children }) => {
-  const { showForm, setShowForm } = useContext(ToggleContext);
+  const { setShowForm } = useContext(ToggleContext);
 
-  const [notes, setNotes] = useState([
-    {
-      title: 'Note Title 1',
-      message: 'This is Note 1',
-    },
-    {
-      title: 'Note Title 2',
-      message: 'This is Note 2',
-    },
-    {
-      title: 'Note Title 3',
-      message: 'This is Note 3',
-    },
-  ]);
-
+  const [notes, setNotes] = useState([]);
   const [note, setNote] = useState({
+    id: 0,
     title: '',
     message: '',
   });
+
+  useEffect(() => {
+    getNotes();
+  }, []);
+
+  const getNotes = async () => {
+    const res = await fetch('http://localhost:3003/notes?_sort=id&_order=asc');
+    const data = await res.json();
+    setNotes(data);
+  };
+
+  const addNote = async (newNote) => {
+    const res = await fetch('http://localhost:3003/notes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newNote),
+    });
+    const data = await res.json();
+
+    setNotes([data, ...notes]);
+  };
 
   const changeHandler = (e) => {
     const { value, name } = e.target;
@@ -37,13 +47,13 @@ export const NoteProvider = ({ children }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setNotes([...notes, note]);
+    // setNotes([...notes, note]);
+    addNote(note);
     setNote({
       title: '',
       message: '',
     });
     setShowForm((prev) => !prev);
-    console.log(notes);
   };
 
   return (
