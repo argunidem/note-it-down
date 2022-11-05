@@ -18,13 +18,13 @@ export const NoteProvider = ({ children }) => {
   }, []);
 
   const getNotes = async () => {
-    const res = await fetch('http://localhost:3003/notes?_sort=id&_order=asc');
+    const res = await fetch('/notes?_sort=id&_order=asc');
     const data = await res.json();
     setNotes(data);
   };
 
   const addNote = async (newNote) => {
-    const res = await fetch('http://localhost:3003/notes', {
+    const res = await fetch('/notes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,6 +34,14 @@ export const NoteProvider = ({ children }) => {
     const data = await res.json();
 
     setNotes([data, ...notes]);
+  };
+
+  const deleteNote = async (id) => {
+    await fetch(`/notes/${id}`, {
+      method: 'DELETE',
+    });
+
+    setNotes(notes.filter((item) => item.id !== id));
   };
 
   const changeHandler = (e) => {
@@ -57,7 +65,9 @@ export const NoteProvider = ({ children }) => {
   };
 
   return (
-    <NoteContext.Provider value={{ note, notes, changeHandler, submitHandler }}>
+    <NoteContext.Provider
+      value={{ note, notes, changeHandler, submitHandler, deleteNote }}
+    >
       {children}
     </NoteContext.Provider>
   );
