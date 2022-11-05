@@ -44,6 +44,20 @@ export const NoteProvider = ({ children }) => {
     setNotes(notes.filter((item) => item.id !== id));
   };
 
+  const updateNote = async (id, updatedNote) => {
+    const res = await fetch(`/notes/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedNote),
+    });
+
+    const data = res.json();
+
+    setNotes(notes.map((item) => (item.id === id ? data : item)));
+  };
+
   const changeHandler = (e) => {
     const { value, name } = e.target;
 
@@ -66,7 +80,14 @@ export const NoteProvider = ({ children }) => {
 
   return (
     <NoteContext.Provider
-      value={{ note, notes, changeHandler, submitHandler, deleteNote }}
+      value={{
+        note,
+        notes,
+        changeHandler,
+        submitHandler,
+        deleteNote,
+        updateNote,
+      }}
     >
       {children}
     </NoteContext.Provider>

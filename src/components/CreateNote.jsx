@@ -1,16 +1,13 @@
 import React, { useContext } from 'react';
 import NoteContext from '../context/NoteContext';
-import { IoAddOutline } from 'react-icons/io5';
 import ToggleContext from '../context/ToggleContext';
+import TextAreaContext from '../context/TextAreaContext';
+import { IoAddOutline } from 'react-icons/io5';
 
 const CreateNote = () => {
   const { note, changeHandler, submitHandler } = useContext(NoteContext);
   const { showForm, setShowForm } = useContext(ToggleContext);
-
-  const textAreaHeight = (e) => {
-    const scrollbarHeight = e.target.scrollHeight;
-    e.target.style.height = `${scrollbarHeight}px`;
-  };
+  const { textAreaHeight } = useContext(TextAreaContext);
 
   if (showForm) {
     return (
