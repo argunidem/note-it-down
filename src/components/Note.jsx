@@ -55,7 +55,7 @@ const Note = forwardRef(({ note }, ref) => {
 
   if (edit.isEditing) {
     return (
-      <form className='box'>
+      <form>
         <AiTwotoneEdit className='edit-btn' size='30px' onClick={clearEdit} />
         <IoAddOutline
           onClick={() => deleteNote(note.id)}
@@ -84,7 +84,7 @@ const Note = forwardRef(({ note }, ref) => {
   }
 
   return (
-    <article className='box' ref={ref}>
+    <article ref={ref}>
       <AiTwotoneEdit className='edit-btn' size='30px' onClick={clickHandler} />
       <IoAddOutline
         onClick={() => deleteNote(note.id)}

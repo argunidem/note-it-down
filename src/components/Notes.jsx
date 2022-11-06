@@ -16,19 +16,16 @@ const Notes = () => {
         <AnimatePresence>
           {notes.map((note, index) => {
             return (
-              <MotionNote
-                key={index}
-                initial={{ x: -100, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ type: 'spring', duration: 0.4, scale: 1 }}
-                exit={{
-                  x: -100,
-                  opacity: 0,
-                  scale: 0,
-                  transition: { duration: 0 },
-                }}
-                note={note}
-              />
+              <motion.div
+                className='box'
+                key={note.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+                exit={{ opacity: 0, transition: { duration: 0.4 } }}
+              >
+                <MotionNote note={note} />
+              </motion.div>
             );
           })}
         </AnimatePresence>

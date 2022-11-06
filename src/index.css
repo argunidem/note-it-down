@@ -37,7 +37,6 @@ header {
 }
 
 .add {
-  flex-shrink: 1;
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -65,7 +64,6 @@ header {
 }
 
 .notes {
-  flex-shrink: 2;
   padding: 20px;
   width: 100%;
 }
@@ -161,6 +159,9 @@ button.save-btn:hover {
 }
 
 .box {
+  height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
   margin: 3%;
   padding: 50px;
@@ -173,11 +174,11 @@ form.box {
   padding: 30px;
 }
 
-.box p {
+.box * {
   word-wrap: break-word;
 }
 
-.box > svg.close-btn {
+.box svg.close-btn {
   background-color: #814343;
   top: -1px;
   right: -1px;
@@ -185,7 +186,7 @@ form.box {
   padding: 5px;
 }
 
-.box > .edit-btn {
+.box .edit-btn {
   cursor: pointer;
   position: absolute;
   color: #3a82c5;
@@ -194,15 +195,15 @@ form.box {
   height: 30px;
 }
 
-.box > .edit-btn:hover {
+.box .edit-btn:hover {
   color: #5a9edd;
 }
 
-.box > svg.close-btn:hover {
+.box svg.close-btn:hover {
   background-color: #b94545;
 }
 
-.box > button.save-btn {
+.box button.save-btn {
   position: absolute;
   height: 30px;
   right: -1px;
@@ -214,7 +215,7 @@ form.box {
   border-radius: 4px 3px 12px 3px;
 }
 
-.box > button.save-btn:hover {
+.box button.save-btn:hover {
   background-color: #3a9e74;
 }
 
