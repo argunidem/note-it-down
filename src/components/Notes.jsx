@@ -19,8 +19,8 @@ const Notes = () => {
               <motion.div
                 className='box'
                 key={note.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, x: -1000 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4 }}
                 exit={{ opacity: 0, transition: { duration: 0.4 } }}
               >
