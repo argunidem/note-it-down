@@ -18,7 +18,7 @@ export const NoteProvider = ({ children }) => {
   }, []);
 
   const getNotes = async () => {
-    const res = await fetch('/notes?_sort=id&_order=asc');
+    const res = await fetch('/notes?_sort=id&_order=desc');
     const data = await res.json();
     setNotes(data);
   };
@@ -53,7 +53,7 @@ export const NoteProvider = ({ children }) => {
       body: JSON.stringify(updatedNote),
     });
 
-    const data = res.json();
+    const data = await res.json();
 
     setNotes(notes.map((item) => (item.id === id ? data : item)));
   };

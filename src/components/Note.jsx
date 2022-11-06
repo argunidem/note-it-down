@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, forwardRef } from 'react';
 import NoteContext from '../context/NoteContext';
 import TextAreaContext from '../context/TextAreaContext';
 import { IoAddOutline } from 'react-icons/io5';
 import { AiTwotoneEdit } from 'react-icons/ai';
 
-const Note = ({ note }) => {
+const Note = forwardRef(({ note }, ref) => {
   const [edit, setEdit] = useState({
     updatedNote: {
       title: '',
@@ -15,9 +15,6 @@ const Note = ({ note }) => {
 
   const { deleteNote, updateNote } = useContext(NoteContext);
   const { textAreaHeight } = useContext(TextAreaContext);
-
-  // ?????? /////////// FIX IT ///////////////////////
-  useEffect(() => {}, [edit.isEditing]);
 
   const clickHandler = () => {
     setEdit({
@@ -87,7 +84,7 @@ const Note = ({ note }) => {
   }
 
   return (
-    <article className='box'>
+    <article className='box' ref={ref}>
       <AiTwotoneEdit className='edit-btn' size='30px' onClick={clickHandler} />
       <IoAddOutline
         onClick={() => deleteNote(note.id)}
@@ -98,6 +95,6 @@ const Note = ({ note }) => {
       <p>{note.message}</p>
     </article>
   );
-};
+});
 
 export default Note;

@@ -2,23 +2,18 @@
   "notes": [
     {
       "id": 1,
-      "title": "note 1",
-      "message": "note 1"
+      "title": "Note 1",
+      "message": "This is note 1"
     },
     {
-      "title": "note 2",
-      "message": "note 2",
+      "title": "Note 2",
+      "message": "This is note 2",
       "id": 2
     },
     {
+      "id": 3,
       "title": "note 3",
-      "message": "note 3",
-      "id": 3
-    },
-    {
-      "title": "note 4",
-      "message": "note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4note 4",
-      "id": 4
+      "message": "This is note 3"
     }
   ]
 }
