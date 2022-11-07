@@ -45,6 +45,8 @@ const Note = forwardRef(({ note }, ref) => {
       },
       isEditing: true,
     });
+    e.target.parentElement.parentElement.scrollTo(0, 1000);
+    console.log(e.target.parentElement.offsetHeight);
   };
 
   const submitHandler = (e) => {
@@ -56,11 +58,15 @@ const Note = forwardRef(({ note }, ref) => {
   if (edit.isEditing) {
     return (
       <form>
-        <AiTwotoneEdit className='edit-btn' size='30px' onClick={clearEdit} />
+        <AiTwotoneEdit
+          className='edit-form-btn'
+          size='30px'
+          onClick={clearEdit}
+        />
         <IoAddOutline
           onClick={() => deleteNote(note.id)}
           size='30px'
-          className='close-btn'
+          className='close-form-btn'
         />
         <input
           type='text'

@@ -99,6 +99,7 @@ svg.close-btn {
   cursor: pointer;
   z-index: 2;
   position: absolute;
+
   background-color: #5f3737;
   top: -20px;
   right: -20px;
@@ -133,6 +134,7 @@ form textarea {
   border-radius: 0 0 10px 10px;
   resize: none;
   transition: all 0.2s;
+  outline: none;
 }
 
 textarea::-webkit-scrollbar {
@@ -217,7 +219,9 @@ button.save-btn:hover {
 }
 
 .box > form {
-  padding: 30px;
+  padding: 30px 0 30px 0;
+  position: relative;
+  z-index: 0;
 }
 
 .box * {
@@ -226,8 +230,8 @@ button.save-btn:hover {
 
 .box svg.close-btn {
   background-color: #814343;
-  top: -1px;
-  right: -1px;
+  top: 5px;
+  right: 5px;
   height: 30px;
   padding: 5px;
 }
@@ -237,8 +241,28 @@ button.save-btn:hover {
   position: absolute;
   /* color: #3a82c5; */
   color: #306761;
-  top: -1px;
-  right: 28px;
+  top: 5px;
+  right: 35px;
+  height: 30px;
+}
+
+.box .close-form-btn {
+  position: absolute;
+  background-color: #814343;
+  top: -15px;
+  right: -15px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 50%;
+  transform: rotate(45deg);
+}
+
+.box .edit-form-btn {
+  cursor: pointer;
+  position: absolute;
+  color: #306761;
+  top: -15px;
+  right: 15px;
   height: 30px;
 }
 
@@ -251,16 +275,26 @@ button.save-btn:hover {
   background-color: #b94545;
 }
 
+.box .close-form-btn:hover {
+  background-color: #b94545;
+}
+
+.box .edit-form-btn:hover {
+  color: #31867c;
+}
+
 .box button.save-btn {
+  align-items: flex-end;
+  z-index: -1;
   position: absolute;
-  height: 30px;
-  right: -1px;
-  bottom: -1px;
-  margin-top: 0;
+  width: 100%;
+  height: 80px;
+  left: 0px;
+  bottom: -4px;
   font-size: 18px;
   color: #fff;
   background-color: #306761;
-  border-radius: 4px 3px 12px 3px;
+  border-radius: 4px 3px 12px 12px;
 }
 
 .box button.save-btn:hover {
@@ -291,6 +325,9 @@ button.save-btn:hover {
 
   .boxes::after {
     width: 280px;
+  }
+  .box button.save-btn {
+    width: 100%;
   }
 }
 

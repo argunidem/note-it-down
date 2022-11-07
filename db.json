@@ -2,43 +2,28 @@
   "notes": [
     {
       "id": 1,
-      "title": "note 1",
-      "message": "note 1"
+      "title": "Title 1",
+      "message": "This is my note 1."
     },
     {
-      "title": "note 2",
-      "message": "note 2",
+      "title": "Title 2",
+      "message": "This is my note 2.",
       "id": 2
     },
     {
-      "title": "note 3",
-      "message": "note 3",
+      "title": "Title 3",
+      "message": "This is my note 3.",
       "id": 3
     },
     {
-      "title": "note 4",
-      "message": "note 4",
+      "title": "Title 4",
+      "message": "This is my note 4",
       "id": 4
     },
     {
-      "title": "note 5",
-      "message": "note 5",
+      "title": "Title 5",
+      "message": "This is my note 5.",
       "id": 5
-    },
-    {
-      "title": "note 6",
-      "message": "note 6",
-      "id": 6
-    },
-    {
-      "id": 7,
-      "title": "note 7",
-      "message": "note 7"
-    },
-    {
-      "title": "note 8",
-      "message": "note 8note 8note 8note 8note 8note 8note 8note 8",
-      "id": 8
     }
   ]
 }
