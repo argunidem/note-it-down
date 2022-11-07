@@ -9,8 +9,10 @@
 }
 
 body {
-  background-color: #27272a;
+  /* background-color: #27272a; */
+  background-color: rgb(15 23 42);
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body,
@@ -37,7 +39,8 @@ body,
 }
 
 header {
-  background-color: #37373f;
+  /* background-color: #37373f; */
+  background-color: rgb(30 41 59);
   height: 70px;
   padding-block: 4vh;
   width: 100%;
@@ -190,6 +193,12 @@ button.save-btn:hover {
   background-color: #888;
   border-radius: 12px;
   width: 300px;
+  transition: all 0.5s;
+}
+
+.box:hover {
+  transform: rotate(-2deg) scale(1.05) !important;
+  box-shadow: 3px 10px 20px rgba(255, 255, 255, 0.2);
 }
 
 .box::-webkit-scrollbar-track {
