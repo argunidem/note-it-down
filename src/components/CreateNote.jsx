@@ -12,7 +12,7 @@ const CreateNote = forwardRef((props, ref) => {
   return (
     <form className='create-note' ref={ref}>
       <IoAddOutline
-        size='40px'
+        size='33px'
         onClick={() => setShowForm((prev) => !prev)}
         className='close-btn'
       />
