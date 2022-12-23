@@ -19,50 +19,41 @@ export const NoteProvider = ({ children }) => {
 
   const getNotes = async () => {
     const res = await fetch(
-      'https://fake-api-notes-app-argunidem.herokuapp.com/notes?_sort=id&_order=desc'
+      'https://tet-api.onrender.com/notes?_sort=id&_order=desc'
     );
     const data = await res.json();
     setNotes(data);
   };
 
   const addNote = async (newNote) => {
-    const res = await fetch(
-      'https://fake-api-notes-app-argunidem.herokuapp.com/notes',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newNote),
-      }
-    );
+    const res = await fetch('https://tet-api.onrender.com/notes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newNote),
+    });
     const data = await res.json();
 
     setNotes([data, ...notes]);
   };
 
   const deleteNote = async (id) => {
-    await fetch(
-      `https://fake-api-notes-app-argunidem.herokuapp.com/notes/${id}`,
-      {
-        method: 'DELETE',
-      }
-    );
+    await fetch(`https://tet-api.onrender.com/notes/${id}`, {
+      method: 'DELETE',
+    });
 
     setNotes(notes.filter((item) => item.id !== id));
   };
 
   const updateNote = async (id, updatedNote) => {
-    const res = await fetch(
-      `https://fake-api-notes-app-argunidem.herokuapp.com/notes/${id}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedNote),
-      }
-    );
+    const res = await fetch(`https://tet-api.onrender.com/notes/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedNote),
+    });
 
     const data = await res.json();
 
