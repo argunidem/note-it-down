@@ -4,11 +4,11 @@ import TextAreaContext from '../context/TextAreaContext';
 import { IoAddOutline } from 'react-icons/io5';
 import { AiTwotoneEdit } from 'react-icons/ai';
 
-const Note = forwardRef(({ note }, ref) => {
+const Note = forwardRef(({ noteData }, ref) => {
   const [edit, setEdit] = useState({
     updatedNote: {
       title: '',
-      message: '',
+      note: '',
     },
     isEditing: false,
   });
@@ -17,10 +17,12 @@ const Note = forwardRef(({ note }, ref) => {
   const { textAreaHeight } = useContext(TextAreaContext);
 
   const clickHandler = () => {
+    console.log(noteData);
+
     setEdit({
       updatedNote: {
-        title: note.title,
-        message: note.message,
+        title: noteData.title,
+        note: noteData.note,
       },
       isEditing: true,
     });
@@ -30,7 +32,7 @@ const Note = forwardRef(({ note }, ref) => {
     setEdit({
       updatedNote: {
         title: '',
-        message: '',
+        note: '',
       },
       isEditing: false,
     });
@@ -46,12 +48,11 @@ const Note = forwardRef(({ note }, ref) => {
       isEditing: true,
     });
     e.target.parentElement.parentElement.scrollTo(0, 1000);
-    console.log(e.target.parentElement.offsetHeight);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    updateNote(note.id, { ...edit.updatedNote });
+    updateNote(noteData._id, { ...edit.updatedNote });
     clearEdit();
   };
 
@@ -64,7 +65,7 @@ const Note = forwardRef(({ note }, ref) => {
           onClick={clearEdit}
         />
         <IoAddOutline
-          onClick={() => deleteNote(note.id)}
+          onClick={() => deleteNote(noteData._id)}
           size='30px'
           className='close-form-btn'
         />
@@ -77,9 +78,9 @@ const Note = forwardRef(({ note }, ref) => {
         />
         <textarea
           onKeyUp={textAreaHeight}
-          name='message'
+          name='note'
           placeholder='Your note'
-          value={edit.updatedNote.message}
+          value={edit.updatedNote.note}
           onChange={changeHandler}
         />
         <button onClick={submitHandler} className='save-btn'>
@@ -93,12 +94,12 @@ const Note = forwardRef(({ note }, ref) => {
     <article ref={ref}>
       <AiTwotoneEdit className='edit-btn' size='30px' onClick={clickHandler} />
       <IoAddOutline
-        onClick={() => deleteNote(note.id)}
+        onClick={() => deleteNote(noteData._id)}
         size='30px'
         className='close-btn'
       />
-      <h3>{note.title}</h3>
-      <p>{note.message}</p>
+      <h3>{noteData.title}</h3>
+      <p>{noteData.note}</p>
     </article>
   );
 });
