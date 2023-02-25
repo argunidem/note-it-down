@@ -1,4 +1,10 @@
+import Notes from '../components/Notes';
+
 const Home = () => {
-  return <p className='font-bold text-2xl text-bluish-gray-100'>Home Page</p>;
+  return (
+    <main>
+      <Notes />
+    </main>
+  );
 };
 export default Home;

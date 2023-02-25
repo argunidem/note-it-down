@@ -64,7 +64,7 @@ const Profile = () => {
         </button>
       </header>
 
-      <main className='mx-3'>
+      <main className='mx-3 pb-32'>
         <div className='flex justify-between items-center mb-4'>
           <p className='font-semibold'>Personal Details</p>
           <p

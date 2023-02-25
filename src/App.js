@@ -1,21 +1,3 @@
-// import React from 'react';
-// import Navbar from './components/Navbar';
-// import Main from './components/Main';
-// import { ToggleProvider } from './context/ToggleContext';
-// import { NoteProvider } from './context/NoteContext';
-// const App = () => {
-//   return (
-//     <ToggleProvider>
-//       <NoteProvider>
-//         <Navbar />
-//         <Main />
-//       </NoteProvider>
-//     </ToggleProvider>
-//   );
-// };
-
-// export default App;
-
 import { Fragment, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -44,7 +26,7 @@ const App = () => {
         console.log('Logged Out');
         setLoggedIn(false);
       }
-      setCheckingStatus(false)
+      setCheckingStatus(false);
     });
   }, [auth]);
 
@@ -55,7 +37,12 @@ const App = () => {
         <div className='w-full px-3 pt-52 xs:w-5/6 xs:mx-auto xs:px-5 sm:w-4/5 max-w-7xl'>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/profile' element={<PrivateRoute loggedIn={loggedIn} status={checkingStatus} />}>
+            <Route
+              path='/profile'
+              element={
+                <PrivateRoute loggedIn={loggedIn} status={checkingStatus} />
+              }
+            >
               <Route path='/profile' element={<Profile />} />
             </Route>
             <Route path='/sign-in' element={<SignIn />} />

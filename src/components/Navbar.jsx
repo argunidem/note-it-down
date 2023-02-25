@@ -1,11 +1,13 @@
 import { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AiFillHome } from 'react-icons/ai';
+import { BsFillPersonFill } from 'react-icons/bs';
 
 const Navbar = ({ loggedIn, status }) => {
   const navigate = useNavigate();
 
   return (
-    <header className='fixed top-0 left-0 right-0 h-24 flex justify-center bg-bluish-gray-200 text-slate-300'>
+    <header className='fixed top-0 left-0 right-0 z-50 h-24 flex justify-center bg-bluish-gray-200 text-slate-300'>
       <div className='w-full xs:w-5/6 px-3 xs:px-5 sm:w-4/5 max-w-7xl flex justify-between items-center'>
         <h1
           onClick={() => navigate('/')}
@@ -23,13 +25,15 @@ const Navbar = ({ loggedIn, status }) => {
                   onClick={() => navigate('/')}
                   className='cursor-pointer transition duration-200 hover:text-slate-400'
                 >
-                  Home
+                  <AiFillHome className='hidden sm:inline' />
+                  <span className='align-middle'> Home</span>
                 </li>
                 <li
                   onClick={() => navigate('/profile')}
                   className='border border-slate-600 rounded-md px-2 py-1 cursor-pointer transition duration-200 hover:bg-slate-800 active:translate-y-0.5 sm:px-3'
                 >
-                  Profile
+                  <BsFillPersonFill className='hidden sm:inline' />
+                  <span className='align-middle'> Profile</span>
                 </li>
               </Fragment>
             ) : (
