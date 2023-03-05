@@ -49,11 +49,13 @@ const Form = ({ setShowForm, fetchNotes }) => {
       await addDoc(collection(db, 'notes'), formDataCopy);
       fetchNotes();
       toast.success('Your new note has been created.', {
+        autoClose: 1500,
         transition: Slide,
         theme: 'colored',
       });
     }
     setLoading(false);
+    setShowForm(false);
   };
 
   const onChange = (e) => {

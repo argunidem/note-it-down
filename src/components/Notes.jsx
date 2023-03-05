@@ -1,6 +1,15 @@
 import { Fragment, useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from 'firebase/firestore';
 import { db } from '../firebase.config';
 import { Slide, toast } from 'react-toastify';
 import Note from './Note';
@@ -12,6 +21,8 @@ const Notes = () => {
   const [notes, setNotes] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
   const auth = getAuth();
 
   const fetchNotes = async () => {
@@ -46,6 +57,19 @@ const Notes = () => {
       }
     }
   };
+
+  const deleteNote = async (id) => {
+    console.log('Delete note with id of ' + id);
+    await deleteDoc(doc(db, 'notes', id));
+    const updatedNotes = notes.filter((note) => note.id !== id);
+    setNotes(updatedNotes);
+    toast.success('The note has been successfully deleted!', {
+      transition: Slide,
+      autoClose: 1500,
+    });
+    setModalOpen(false);
+  };
+
   useEffect(() => {
     fetchNotes();
   }, [auth.currentUser?.uid]);
@@ -55,11 +79,11 @@ const Notes = () => {
       <div
         className={`flex items-center w-full ${
           showForm && 'justify-center'
-        } h-40 bg-blue-500`}
+        } h-40 `}
       >
         {!showForm ? (
           <button
-            className='pl-2 pr-3 bg-slate-200 text-bluish-gray-200 rounded-md border-2 border-bluish-gray-500 transition duration-200 hover:bg-bluish-gray-500 hover:text-white'
+            className='pl-2 pr-3 bg-slate-200 text-bluish-gray-200 rounded-md border border-bluish-gray-500 shadow-xl transition duration-200 hover:bg-bluish-gray-500 hover:text-white'
             onClick={() => setShowForm(true)}
           >
             <IoAddOutline className='inline' size='40px'></IoAddOutline>
@@ -73,12 +97,19 @@ const Notes = () => {
         <Spinner />
       ) : notes && notes.length > 0 ? (
         <ul className='grid gap-3 justify-items-center sm:grid-cols-2 xl:grid-cols-3 mt-6 pb-24'>
-          {notes.map((note, index) => (
-            <Note note={note.data} id={note.id} key={note.id} />
+          {notes.map((note) => (
+            <Note
+              note={note.data}
+              id={note.id}
+              key={note.id}
+              deleteNote={deleteNote}
+              modalOpen={modalOpen}
+              setModalOpen={setModalOpen}
+            />
           ))}
         </ul>
       ) : (
-        <p className='-mt-10 mx-3 font-bold text-lg xs:text-xl xs:mx-0 text-bluish-gray-100'>
+        <p className='mt-2 mx-3 font-bold text-lg xs:text-xl xs:mx-0 text-bluish-gray-100'>
           No notes to show at the moment. Create a new one!
         </p>
       )}
