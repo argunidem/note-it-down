@@ -2,7 +2,7 @@ import Notes from '../components/Notes';
 
 const Home = () => {
   return (
-    <main>
+    <main className='-mt-12'>
       <Notes />
     </main>
   );

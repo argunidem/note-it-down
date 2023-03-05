@@ -25,15 +25,15 @@ const Navbar = ({ loggedIn, status }) => {
                   onClick={() => navigate('/')}
                   className='cursor-pointer transition duration-200 hover:text-slate-400'
                 >
-                  <AiFillHome className='hidden sm:inline' />
-                  <span className='align-middle'> Home</span>
+                  <AiFillHome className='hidden mb-1 sm:inline' />
+                  <span> Home</span>
                 </li>
                 <li
                   onClick={() => navigate('/profile')}
                   className='border border-slate-600 rounded-md px-2 py-1 cursor-pointer transition duration-200 hover:bg-slate-800 active:translate-y-0.5 sm:px-3'
                 >
-                  <BsFillPersonFill className='hidden sm:inline' />
-                  <span className='align-middle'> Profile</span>
+                  <BsFillPersonFill className='hidden mb-1 sm:inline' />
+                  <span> Profile</span>
                 </li>
               </Fragment>
             ) : (
