@@ -1,17 +1,31 @@
 import { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+  doc,
+} from 'firebase/firestore';
 import { db } from '../firebase.config';
 import { Slide, toast } from 'react-toastify';
+import Card from './shared/Card';
 import Spinner from './Spinner';
 import { textAreaHeight } from './utils/scroll';
 import { IoAddOutline } from 'react-icons/io5';
 
-const Form = ({ setShowForm, fetchNotes }) => {
+const Form = ({
+  setShowForm,
+  fetchNotes,
+  isEditing,
+  editData,
+  setIsUpdated,
+  id,
+}) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    title: '',
-    note: '',
+    title: isEditing ? editData.title : '',
+    note: isEditing ? editData.note : '',
     userRef: '',
   });
   const { title, note } = formData;
@@ -45,17 +59,22 @@ const Form = ({ setShowForm, fetchNotes }) => {
         ...formData,
         timestamp: serverTimestamp(),
       };
-
-      await addDoc(collection(db, 'notes'), formDataCopy);
-      fetchNotes();
-      toast.success('Your new note has been created.', {
-        autoClose: 1500,
-        transition: Slide,
-        theme: 'colored',
-      });
+      if (!isEditing) {
+        await addDoc(collection(db, 'notes'), formDataCopy);
+        fetchNotes();
+        toast.success('Your new note has been created.', {
+          autoClose: 1500,
+          transition: Slide,
+          theme: 'colored',
+        });
+        setShowForm(false);
+      } else {
+        const docRef = doc(db, 'notes', id);
+        updateDoc(docRef, formDataCopy);
+        setIsUpdated(true);
+      }
     }
     setLoading(false);
-    setShowForm(false);
   };
 
   const onChange = (e) => {
@@ -66,17 +85,19 @@ const Form = ({ setShowForm, fetchNotes }) => {
   };
 
   return (
-    <form className='relative flex flex-col' onSubmit={submitHandler}>
-      <IoAddOutline
-        size='26px'
-        onClick={() => setShowForm(false)}
-        className='absolute -top-2 -right-2 rotate-45 rounded-full bg-red-800 text-white hover:bg-red-700 hover:cursor-pointer'
-      />
+    <Card isForm={true} onSubmit={submitHandler}>
+      {!isEditing && (
+        <IoAddOutline
+          size='26px'
+          onClick={() => setShowForm(false)}
+          className='absolute -top-2 -right-2 rotate-45 rounded-full bg-red-800 text-white hover:bg-red-700 hover:cursor-pointer'
+        />
+      )}
       <input
         type='text'
         placeholder='Title'
         name='title'
-        className='px-2 py-1 bg-bluish-gray-200 text-slate-300 rounded-t-md'
+        className='px-3 py-1 bg-bluish-gray-200 text-slate-300 rounded-t-md'
         id='title'
         value={title}
         onChange={onChange}
@@ -84,16 +105,16 @@ const Form = ({ setShowForm, fetchNotes }) => {
       <textarea
         name='message'
         placeholder='Your note'
-        className='h-24 px-2 py-1 bg-bluish-gray-200 text-slate-300 resize-none'
+        className='h-52 px-3 py-1 bg-bluish-gray-200 text-slate-300 resize-none'
         id='note'
         value={note}
         onChange={onChange}
         onKeyUp={textAreaHeight}
       />
-      <button className='bg-teal-700 text-slate-300 rounded-b-md hover:bg-teal-600'>
-        Save
+      <button className='py-1 bg-bluish-gray-100 text-slate-300 font-semibold rounded-b-md hover:bg-teal-600'>
+        Save{isEditing && ' Changes'}
       </button>
-    </form>
+    </Card>
   );
 };
 export default Form;

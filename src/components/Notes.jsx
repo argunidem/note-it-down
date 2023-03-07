@@ -6,7 +6,6 @@ import {
   query,
   where,
   orderBy,
-  updateDoc,
   doc,
   deleteDoc,
 } from 'firebase/firestore';
@@ -14,14 +13,17 @@ import { db } from '../firebase.config';
 import { Slide, toast } from 'react-toastify';
 import Note from './Note';
 import Form from './Form';
+import Modal from './modal/Modal';
 import Spinner from './Spinner';
 import { IoAddOutline } from 'react-icons/io5';
+import { AnimatePresence } from 'framer-motion';
 
 const Notes = () => {
   const [notes, setNotes] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteData, setDeleteData] = useState(null);
 
   const auth = getAuth();
 
@@ -76,6 +78,16 @@ const Notes = () => {
 
   return (
     <Fragment>
+      <AnimatePresence initial={false}>
+        {modalOpen && (
+          <Modal
+            id={deleteData.id}
+            deleteNote={deleteNote}
+            handleClose={() => setModalOpen(false)}
+            title={deleteData.title}
+          />
+        )}
+      </AnimatePresence>
       <div
         className={`flex items-center w-full ${
           showForm && 'justify-center'
@@ -102,15 +114,15 @@ const Notes = () => {
               note={note.data}
               id={note.id}
               key={note.id}
-              deleteNote={deleteNote}
               modalOpen={modalOpen}
               setModalOpen={setModalOpen}
+              setDeleteData={setDeleteData}
             />
           ))}
         </ul>
       ) : (
-        <p className='mt-2 mx-3 font-bold text-lg xs:text-xl xs:mx-0 text-bluish-gray-100'>
-          No notes to show at the moment. Create a new one!
+        <p className='mt-2 mx-3 font-bold text-center text-lg xs:text-xl xs:mx-0 text-bluish-gray-100'>
+          No notes to show at the moment.
         </p>
       )}
     </Fragment>

@@ -1,119 +1,116 @@
-import { Fragment, useState } from 'react';
-import Modal from './modal/Modal';
+import { Fragment, useEffect, useState } from 'react';
+import { getDoc, doc } from 'firebase/firestore';
+import { db } from '../firebase.config';
+import Palette from './palette/Palette';
+import Card from './shared/Card';
+import Form from './Form';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { IoIosArrowDown } from 'react-icons/io';
+import { Slide, toast } from 'react-toastify';
 
-const Note = ({ note, id, deleteNote, modalOpen, setModalOpen }) => {
+const Note = ({ note, id, modalOpen, setModalOpen, setDeleteData }) => {
+  const [data, setData] = useState(note);
   const [showPalette, setShowPalette] = useState(false);
   const [theme, setTheme] = useState('bg-bluish-gray-200');
+  const [showMenu, setShowMenu] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
+
+  useEffect(() => {
+    if (isUpdated) {
+      const fetchNote = async () => {
+        try {
+          const docRef = doc(db, 'notes', id);
+          const docSnap = await getDoc(docRef);
+          console.log(docSnap.data());
+          setData(docSnap.data());
+
+          setIsEditing(false);
+          setIsUpdated(false);
+        } catch (error) {
+          toast.error('Something went wrong', {
+            theme: 'colored',
+            transition: Slide,
+          });
+        }
+      };
+
+      fetchNote();
+    }
+  }, [isUpdated]);
 
   return (
     <Fragment>
-      <AnimatePresence initial={false}>
-        {modalOpen && (
-          <Modal
-            id={id}
-            deleteNote={deleteNote}
-            handleClose={() => setModalOpen(false)}
-            title={note.title}
-          />
-        )}
-      </AnimatePresence>
-      <div
-        className={`${
-          !modalOpen && 'relative'
-        } ${theme} w-72 h-64 sm:w-60 sm:h-52 md:w-72 md:h-56 lg:w-80 lg:h-64 2xl:w-96 rounded-md text-slate-300`}
-      >
-        <h4 className='w-3/4 h-10 overflow-hidden font-bold text-center p-2 border-b border-slate-200'>
-          {note.title}
-        </h4>
-        <p className='px-4 py-2'>{note.note}</p>
-        <button onClick={() => setModalOpen(true)}>
-          <AiOutlineClose className='absolute top-1.5 right-1.5 rounded-sm w-6 h-6 p-0.5 bg-red-800 text-white hover:bg-red-700 hover:cursor-pointer' />
-        </button>
-        <button className='absolute top-1.5 right-8 rounded-sm w-6 h-6 p-1 flex justify-center items-center bg-teal-600 hover:bg-teal-500 hover:cursor-pointer'>
-          <div className={!modalOpen && 'relative inline-block group'}>
-            <div className='overflow-hidden absolute -right-9 top-5 w-max h-0 rounded-md font-bold tracking-tighter bg-slate-200 text-slate-500 min-full z-20 transition-all duration-500 group-hover:h-16'>
-              <p className='hover:bg-bluish-gray-100 hover:text-white px-2 py-1 rounded-t-md'>
-                Edit Your Note
-              </p>
-              <p
-                className='hover:bg-bluish-gray-100 hover:text-white px-2 py-1 rounded-b-md'
-                onClick={() => setShowPalette(true)}
-              >
-                Change Color
-              </p>
-            </div>
+      {!isEditing ? (
+        <Card modalOpen={modalOpen} theme={theme} isForm={false}>
+          <h4 className='w-3/4 h-10 overflow-hidden font-bold text-center p-2 border-b border-slate-200'>
+            {data.title}
+          </h4>
+          <p className='px-3 py-2 break-words overflow-y-auto h-5/6'>
+            {data.note}
+          </p>
+          <button
+            onClick={() => {
+              setModalOpen(true);
+              setDeleteData({ title: note.title, id });
+            }}
+          >
+            <AiOutlineClose className='absolute top-1.5 right-1.5 rounded-sm w-6 h-6 p-0.5 bg-red-800 text-white hover:bg-red-700 hover:cursor-pointer' />
+          </button>
+          <button
+            className='absolute top-1.5 right-9 rounded-sm w-6 h-6 p-1 flex justify-center items-center bg-teal-600 hover:bg-teal-500 hover:cursor-pointer'
+            onClick={() => setShowMenu((prev) => !prev)}
+          >
+            <AnimatePresence>
+              {showMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: -50 }}
+                  animate={{
+                    opacity: 1,
+                    y: -6,
+                    transition: { duration: 0.3 },
+                  }}
+                  exit={{
+                    opacity: 0,
+                    y: -50,
+                    transition: { duration: 0.3 },
+                  }}
+                  className={`${!modalOpen && 'relative inline-block'}`}
+                >
+                  <div className='overflow-hidden absolute -right-9 top-5 w-max rounded-md font-bold tracking-tighter bg-slate-200 text-slate-500 min-full z-20 transition-all duration-500'>
+                    <p
+                      className='hover:bg-bluish-gray-100 hover:text-white px-2 py-1 rounded-t-md'
+                      onClick={() => setIsEditing(true)}
+                    >
+                      Edit Note
+                    </p>
+                    <p
+                      className='hover:bg-bluish-gray-100 hover:text-white px-2 py-1 rounded-b-md'
+                      onClick={() => setShowPalette(true)}
+                    >
+                      Change Color
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
             <BsThreeDotsVertical />
-          </div>
-        </button>
-        <div
-          className={`overflow-hidden absolute right-0 bottom-0 left-0 bg-bluish-gray-100 rounded-b-md transition-all duration-700 ${
-            showPalette ? 'h-[70px]' : 'h-0'
-          }`}
-        >
-          <div className='relative h-full'>
-            <div className='absolute left-1/2 -translate-x-1/2'>
-              <IoIosArrowDown
-                className='w-8 bg-bluish-gray-200 rounded-sm text-xl hover:bg-slate-300 hover:text-bluish-gray-200 hover:cursor-pointer'
-                onClick={() => setShowPalette(false)}
-              />
-            </div>
-            <div className='flex items-center justify-evenly h-full pt-5'>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 1 }}
-                className='w-5 h-5 rounded-full bg-white hover:cursor-pointer'
-                onClick={() => setTheme('bg-white text-black')}
-              ></motion.div>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 1 }}
-                className='w-5 h-5 rounded-full bg-yellow-400 hover:cursor-pointer'
-                onClick={() => setTheme('bg-yellow-400 text-slate-700')}
-              ></motion.div>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 1 }}
-                className='w-5 h-5 rounded-full bg-teal-500 hover:cursor-pointer'
-                onClick={() => setTheme('bg-teal-500')}
-              ></motion.div>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 1 }}
-                className='w-5 h-5 rounded-full bg-blue-400 hover:cursor-pointer'
-                onClick={() => setTheme('bg-blue-400')}
-              ></motion.div>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 1 }}
-                className='w-5 h-5 rounded-full bg-indigo-400 hover:cursor-pointer'
-                onClick={() => setTheme('bg-indigo-400')}
-              ></motion.div>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 1 }}
-                className='w-5 h-5 rounded-full bg-pink-400 hover:cursor-pointer'
-                onClick={() => setTheme('bg-pink-400 text-white')}
-              ></motion.div>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 1 }}
-                className='w-5 h-5 rounded-full bg-red-900 hover:cursor-pointer'
-                onClick={() => setTheme('bg-red-900')}
-              ></motion.div>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 1 }}
-                className='w-5 h-5 rounded-full bg-bluish-gray-200 hover:cursor-pointer'
-                onClick={() => setTheme('bg-bluish-gray-200')}
-              ></motion.div>
-            </div>
-          </div>
-        </div>
-      </div>
+          </button>
+          <Palette
+            showPalette={showPalette}
+            setShowPalette={setShowPalette}
+            setTheme={setTheme}
+          />
+        </Card>
+      ) : (
+        <Form
+          isEditing={isEditing}
+          setIsUpdated={setIsUpdated}
+          editData={data}
+          id={id}
+        />
+      )}
     </Fragment>
   );
 };
