@@ -41,7 +41,7 @@ const Form = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading) {
+  if (loading && !isEditing) {
     return <Spinner />;
   }
 
@@ -55,11 +55,12 @@ const Form = ({
         hideProgressBar: 'hide',
       });
     } else {
-      const formDataCopy = {
-        ...formData,
-        timestamp: serverTimestamp(),
-      };
       if (!isEditing) {
+        const formDataCopy = {
+          ...formData,
+          timestamp: serverTimestamp(),
+          theme: 'bg-bluish-gray-200 text-slate-300',
+        };
         await addDoc(collection(db, 'notes'), formDataCopy);
         fetchNotes();
         toast.success('Your new note has been created.', {
@@ -70,7 +71,7 @@ const Form = ({
         setShowForm(false);
       } else {
         const docRef = doc(db, 'notes', id);
-        updateDoc(docRef, formDataCopy);
+        await updateDoc(docRef, formData);
         setIsUpdated(true);
       }
     }

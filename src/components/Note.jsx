@@ -12,10 +12,14 @@ import { Slide, toast } from 'react-toastify';
 const Note = ({ note, id, modalOpen, setModalOpen, setDeleteData }) => {
   const [data, setData] = useState(note);
   const [showPalette, setShowPalette] = useState(false);
-  const [theme, setTheme] = useState('bg-bluish-gray-200');
+  const [theme, setTheme] = useState('bg-bluish-gray-200 text-slate-300');
   const [showMenu, setShowMenu] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
+
+  useEffect(() => {
+    setTheme(data.theme);
+  }, []);
 
   useEffect(() => {
     if (isUpdated) {
@@ -59,7 +63,7 @@ const Note = ({ note, id, modalOpen, setModalOpen, setDeleteData }) => {
             <AiOutlineClose className='absolute top-1.5 right-1.5 rounded-sm w-6 h-6 p-0.5 bg-red-800 text-white hover:bg-red-700 hover:cursor-pointer' />
           </button>
           <button
-            className='absolute top-1.5 right-9 rounded-sm w-6 h-6 p-1 flex justify-center items-center bg-teal-600 hover:bg-teal-500 hover:cursor-pointer'
+            className='absolute top-1.5 right-9 rounded-sm w-6 h-6 p-1 flex justify-center items-center bg-white text-slate-900 hover:bg-slate-200 hover:cursor-pointer'
             onClick={() => setShowMenu((prev) => !prev)}
           >
             <AnimatePresence>
@@ -100,7 +104,9 @@ const Note = ({ note, id, modalOpen, setModalOpen, setDeleteData }) => {
           <Palette
             showPalette={showPalette}
             setShowPalette={setShowPalette}
+            theme={theme}
             setTheme={setTheme}
+            id={id}
           />
         </Card>
       ) : (

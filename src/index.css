@@ -20,51 +20,58 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background-color: #dce5fc;
+  background-color: #2e3c5d;
 }
 
 #root {
   width: 100vw;
   position: relative;
   min-height: 100vh;
+  background-color: #dce5fc;
 }
 
-h4 + p::-webkit-scrollbar {
+body::-webkit-scrollbar {
   width: 10px;
 }
 
 /* Track */
-h4 + p::-webkit-scrollbar-track {
-  background: #2e3c5d;
+body::-webkit-scrollbar-track {
+  background: #dce5fc;
+  margin-top: 96px;
 }
 
 /* Handle */
-h4 + p::-webkit-scrollbar-thumb {
-  background: #5b73c2;
-  border-radius: 3px;
+body::-webkit-scrollbar-thumb {
+  background: #2e3c5d;
+  border-radius: 2px;
 }
 
 /* Handle on hover */
-h4 + p::-webkit-scrollbar-thumb:hover {
-  background: #526abb;
+body::-webkit-scrollbar-thumb:hover {
+  background: #394c77;
 }
 
+h4 + p::-webkit-scrollbar,
 textarea::-webkit-scrollbar {
   width: 13px;
 }
 
 /* Track */
+h4 + p::-webkit-scrollbar-track,
 textarea::-webkit-scrollbar-track {
   background: #2e3c5d;
+  border-radius: 3px;
 }
 
 /* Handle */
+h4 + p::-webkit-scrollbar-thumb,
 textarea::-webkit-scrollbar-thumb {
   background: #3a5385;
   border-radius: 3px;
 }
 
 /* Handle on hover */
+h4 + p::-webkit-scrollbar-thumb:hover,
 textarea::-webkit-scrollbar-thumb:hover {
   background: #5675b3;
 }
