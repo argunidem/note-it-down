@@ -27,7 +27,6 @@ const Note = ({ note, id, modalOpen, setModalOpen, setDeleteData }) => {
         try {
           const docRef = doc(db, 'notes', id);
           const docSnap = await getDoc(docRef);
-          console.log(docSnap.data());
           setData(docSnap.data());
 
           setIsEditing(false);

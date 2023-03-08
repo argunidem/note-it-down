@@ -12,16 +12,16 @@ import {
 import { db } from '../firebase.config';
 import { Slide, toast } from 'react-toastify';
 import Note from './Note';
-import Form from './Form';
+import Create from './Create';
 import Modal from './modal/Modal';
 import Spinner from './Spinner';
-import { IoAddOutline } from 'react-icons/io5';
+
 import { AnimatePresence } from 'framer-motion';
 
 const Notes = () => {
   const [notes, setNotes] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteData, setDeleteData] = useState(null);
 
@@ -88,22 +88,10 @@ const Notes = () => {
           />
         )}
       </AnimatePresence>
-      <div
-        className={`flex items-center w-full ${
-          showForm && 'justify-center'
-        } h-40 `}
-      >
-        {!showForm ? (
-          <button
-            className='pl-2 pr-3 bg-slate-200 text-bluish-gray-200 rounded-md border border-bluish-gray-500 shadow-xl transition duration-200 hover:bg-bluish-gray-500 hover:text-white'
-            onClick={() => setShowForm(true)}
-          >
-            <IoAddOutline className='inline' size='40px'></IoAddOutline>
-            <span className='font-bold text-lg align-middle'>New Note</span>
-          </button>
-        ) : (
-          <Form setShowForm={setShowForm} fetchNotes={fetchNotes} />
-        )}
+      <div className='flex items-center justify-center w-full h-40 mt-12 mb-4'>
+        <AnimatePresence>
+          <Create fetchNotes={fetchNotes} />
+        </AnimatePresence>
       </div>
       {loading ? (
         <Spinner />

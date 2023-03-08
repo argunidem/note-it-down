@@ -13,7 +13,7 @@ import Footer from './components/Footer';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [checkingStatus, setCheckingStatus] = useState(true);
   const auth = getAuth();
 
@@ -36,7 +36,12 @@ const App = () => {
         <Navbar loggedIn={loggedIn} status={checkingStatus} />
         <div className='w-full px-3 pt-52 xs:w-5/6 xs:mx-auto xs:px-5 sm:w-4/5 max-w-7xl'>
           <Routes>
-            <Route path='/' element={<Home />} />
+            <Route
+              path='/'
+              element={
+                <Home loggedIn={loggedIn} checkingStatus={checkingStatus} />
+              }
+            />
             <Route
               path='/profile'
               element={
