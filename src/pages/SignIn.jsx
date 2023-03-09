@@ -49,7 +49,7 @@ const SignIn = () => {
 
   return (
     <Fragment>
-      <div className='flex flex-col items-center space-y-7 md:space-y-12 px-4'>
+      <div className='flex flex-col items-center space-y-7 md:space-y-12 px-4 pt-10'>
         <header>
           <p className='text-2xl xs:text-4xl text-center font-bold text-bluish-gray-500'>
             Welcome Back!

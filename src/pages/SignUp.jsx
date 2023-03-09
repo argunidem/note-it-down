@@ -69,7 +69,7 @@ const SignUp = () => {
       <div className='flex flex-col items-center space-y-7 md:space-y-12 px-4'>
         <header>
           <p className='text-2xl xs:text-4xl text-center font-bold text-bluish-gray-500'>
-            Welcome Back!
+            Welcome!
           </p>
         </header>
 

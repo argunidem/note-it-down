@@ -34,7 +34,7 @@ const App = () => {
     <Fragment>
       <Router>
         <Navbar loggedIn={loggedIn} status={checkingStatus} />
-        <div className='w-full px-3 pt-52 xs:w-5/6 xs:mx-auto xs:px-5 sm:w-4/5 max-w-7xl'>
+        <div className='w-full px-3 pt-48 pb-24 xs:w-5/6 xs:mx-auto xs:px-5 sm:w-4/5 max-w-7xl'>
           <Routes>
             <Route
               path='/'
