@@ -27,7 +27,7 @@ const Create = ({ fetchNotes }) => {
           exit={{ x: -100, opacity: 0, transition: { duration: 0 } }}
         >
           <button
-            className='pl-2 pr-3 bg-slate-200 text-bluish-gray-200 rounded-md border border-bluish-gray-500 shadow-xl transition duration-200 hover:bg-bluish-gray-500 hover:text-white'
+            className='pl-2 pr-3 bg-white text-bluish-gray-200 rounded-md border border-bluish-gray-500 shadow-xl transition duration-200 hover:bg-bluish-gray-500 hover:text-white'
             onClick={() => setShowForm(true)}
           >
             <IoAddOutline className='inline' size='40px'></IoAddOutline>

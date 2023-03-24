@@ -83,9 +83,9 @@ const Profile = () => {
             <input
               type='text'
               id='name'
-              className={`px-4 py-1 rounded-md ${
+              className={`px-4 py-1 rounded-md border border-slate-300 ${
                 !changeDetails
-                  ? 'disabled:bg-white'
+                  ? 'disabled:bg-slate-100'
                   : 'font-semibold bg-bluish-gray-100 text-white'
               }`}
               disabled={!changeDetails}
@@ -95,9 +95,9 @@ const Profile = () => {
             <input
               type='text'
               id='email'
-              className={`px-4 py-1 rounded-md ${
+              className={`px-4 py-1 rounded-md border border-slate-300 ${
                 !changeDetails
-                  ? 'disabled:bg-white'
+                  ? 'disabled:bg-slate-100'
                   : 'font-semibold bg-bluish-gray-100 text-white'
               }`}
               disabled={!changeDetails}

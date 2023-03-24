@@ -96,7 +96,7 @@ const Notes = () => {
       {loading ? (
         <Spinner />
       ) : notes && notes.length > 0 ? (
-        <ul className='grid gap-3 justify-items-center sm:grid-cols-2 xl:grid-cols-3 mt-6 pb-24'>
+        <ul className='grid gap-3 sm:gap-y-6 justify-items-center sm:grid-cols-2 xl:grid-cols-3 mt-6 pb-24'>
           {notes.map((note) => (
             <Note
               note={note.data}

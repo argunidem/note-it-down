@@ -9,8 +9,6 @@ const Palette = ({ showPalette, setShowPalette, theme, setTheme, id }) => {
     try {
       const docRef = doc(db, 'notes', id);
       const docSnap = await getDoc(docRef);
-      console.log(docSnap.data());
-
       await updateDoc(docRef, { ...docSnap.data(), theme });
 
       setShowPalette(false);

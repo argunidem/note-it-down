@@ -10,6 +10,9 @@ module.exports = {
       xl: '1280px',
       '2xl': '1536px',
     },
+    fontFamily: {
+      inter: ['Inter', 'sans-serif'],
+    },
     extend: {
       colors: {
         'bluish-gray': {
@@ -20,6 +23,10 @@ module.exports = {
           500: '#364a75',
         },
         'blue-1000': '#2b4887',
+      },
+      backgroundImage: {
+        laptop: "url('/src/assets/laptop.jpg')",
+        mobile: "url('/src/assets/mobile.jpg')",
       },
     },
   },
